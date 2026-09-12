@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haven — Private Messenger</title>
+    <meta name="description" content="Haven is a private, calm two-person messenger with strong authentication, automatic locking, secure storage, and encrypted network communication." />
+    <meta property="og:title" content="Haven — Private Messenger" />
+    <meta property="og:description" content="Haven is a private, calm two-person messenger with strong authentication, automatic locking, secure storage, and encrypted network communication." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://caffeine.ai/imgs/share-logo.jpeg" />
+    <meta property="og:image:alt" content="Built with caffeine.ai" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://caffeine.ai/imgs/share-logo.jpeg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#1a6b5a" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js").catch(() => {
+            // Service worker registration is progressive enhancement; the app
+            // still works fully without it.
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

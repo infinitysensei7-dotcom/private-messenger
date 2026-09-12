@@ -1,0 +1,156 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__386906547<Principal, UserRole__91647283>
+  };
+type AppState__485443625 = {var nextCallId : Nat; var nextMessageId : Nat};
+type Attachment__1031801619 =
+  {id : Nat; kind : Text; name : Text; size : Nat; url : Text};
+type Attachment__309045638 =
+  {id : Nat; kind : Text; name : Text; size : Nat; url : Text};
+type AuthorizedUsers__156861066 = {var users : [Principal]};
+type CallId__642369320 = Nat;
+type CallStatus__25797007 = {#declined; #ended; #missed; #ongoing; #ringing};
+type CallStatus__907133077 = {#declined; #ended; #missed; #ongoing; #ringing};
+type Call__843950464 =
+  {
+    callee : UserId__158757552;
+    caller : UserId__158757552;
+    endedAt : ?Timestamp__301639476;
+    id : CallId__642369320;
+    startedAt : Timestamp__301639476;
+    status : CallStatus__25797007
+  };
+type Call__980795529 =
+  {
+    callee : Principal;
+    caller : Principal;
+    endedAt : ?Int;
+    id : Nat;
+    startedAt : Int;
+    status : CallStatus__907133077
+  };
+type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
+type Internal__161573640<K, V> =
+  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
+type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
+type Map__13625999<K, V> =
+  {var root : Node__430031793<K, V>; var size : Nat__58649523};
+type Map__386906547<K, V> = Map__670138087<K, V>;
+type Map__670138087<K, V> = Map__13625999<K, V>;
+type MessageId__291319400 = Nat;
+type MessageStatus__334605049 = {#delivered; #read; #sent};
+type MessageStatus__906724896 = {#delivered; #read; #sent};
+type Message__540807495 =
+  {
+    attachment : ?Attachment__1031801619;
+    id : Nat;
+    reactions : [Reaction__232489727];
+    replyTo : ?Nat;
+    sender : Principal;
+    status : MessageStatus__334605049;
+    text : Text;
+    timestamp : Int
+  };
+type Message__804209456 =
+  {
+    attachment : ?Attachment__309045638;
+    id : MessageId__291319400;
+    reactions : [Reaction__1040909609];
+    replyTo : ?MessageId__291319400;
+    sender : UserId__158757552;
+    status : MessageStatus__906724896;
+    text : Text;
+    timestamp : Timestamp__301639476
+  };
+type Nat__58649523 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__408517841 =
+  {
+    accessControlState : AccessControlState__201339279;
+    answers : Map__386906547<Nat, Text>;
+    authorizedUsers : AuthorizedUsers__156861066;
+    calls : Map__386906547<Nat, Call__980795529>;
+    iceCandidates : Map__386906547<Nat, [Text]>;
+    messages : Map__386906547<Nat, Message__540807495>;
+    offers : Map__386906547<Nat, Text>;
+    presence : Map__386906547<Principal, Presence__437522098>;
+    state : AppState__485443625;
+    typing : Map__386906547<Principal, TypingStatus__875529453>
+  };
+type Node__430031793<K, V> =
+  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
+type OldActor__516573381 = {};
+type Presence__437522098 =
+  {online : Bool; updatedAt : Int; userId : Principal};
+type Presence__439227174 =
+  {
+    online : Bool;
+    updatedAt : Timestamp__301639476;
+    userId : UserId__158757552
+  };
+type Reaction__1040909609 = {author : UserId__158757552; emoji : Text};
+type Reaction__232489727 = {author : Principal; emoji : Text};
+type Timestamp__301639476 = Int;
+type TypingStatus__320658081 =
+  {
+    isTyping : Bool;
+    updatedAt : Timestamp__301639476;
+    userId : UserId__158757552
+  };
+type TypingStatus__875529453 =
+  {isTyping : Bool; updatedAt : Int; userId : Principal};
+type UserId__158757552 = Principal;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20260912_120000" : (_old : OldActor__516573381) -> NewActor__408517841
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__386906547<Principal, UserRole__91647283>
+    };
+  stable answers :
+    {
+      var root : Node__430031793<CallId__642369320, Text>;
+      var size : Nat__58649523
+    };
+  stable authorizedUsers : {var users : [UserId__158757552]};
+  stable calls :
+    {
+      var root : Node__430031793<CallId__642369320, Call__843950464>;
+      var size : Nat__58649523
+    };
+  stable iceCandidates :
+    {
+      var root : Node__430031793<CallId__642369320, [Text]>;
+      var size : Nat__58649523
+    };
+  stable messages :
+    {
+      var root : Node__430031793<MessageId__291319400, Message__804209456>;
+      var size : Nat__58649523
+    };
+  stable offers :
+    {
+      var root : Node__430031793<CallId__642369320, Text>;
+      var size : Nat__58649523
+    };
+  stable presence :
+    {
+      var root : Node__430031793<UserId__158757552, Presence__439227174>;
+      var size : Nat__58649523
+    };
+  stable state :
+    {
+      var nextCallId : CallId__642369320;
+      var nextMessageId : MessageId__291319400
+    };
+  stable typing :
+    {
+      var root : Node__430031793<UserId__158757552, TypingStatus__320658081>;
+      var size : Nat__58649523
+    }
+};

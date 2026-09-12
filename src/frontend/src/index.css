@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "DM Sans";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.875rem;
+
+    --background: 0.985 0.006 85;
+    --foreground: 0.18 0.015 250;
+    --card: 0.99 0.004 85;
+    --card-foreground: 0.18 0.015 250;
+    --popover: 0.99 0.004 85;
+    --popover-foreground: 0.18 0.015 250;
+
+    --primary: 0.42 0.085 175;
+    --primary-foreground: 0.985 0.005 85;
+
+    --secondary: 0.945 0.01 85;
+    --secondary-foreground: 0.22 0.02 250;
+    --muted: 0.95 0.008 85;
+    --muted-foreground: 0.5 0.02 250;
+
+    --accent: 0.93 0.02 85;
+    --accent-foreground: 0.2 0.02 250;
+
+    --destructive: 0.55 0.2 25;
+    --destructive-foreground: 0.985 0.005 85;
+
+    --border: 0.9 0.01 85;
+    --input: 0.9 0.01 85;
+    --ring: 0.42 0.085 175;
+
+    --chart-1: 0.42 0.085 175;
+    --chart-2: 0.62 0.09 180;
+    --chart-3: 0.4 0.07 227;
+    --chart-4: 0.6 0.12 185;
+    --chart-5: 0.45 0.14 30;
+
+    --sidebar: 0.98 0.005 85;
+    --sidebar-foreground: 0.18 0.015 250;
+    --sidebar-primary: 0.42 0.085 175;
+    --sidebar-primary-foreground: 0.985 0.005 85;
+    --sidebar-accent: 0.945 0.01 85;
+    --sidebar-accent-foreground: 0.22 0.02 250;
+    --sidebar-border: 0.9 0.01 85;
+    --sidebar-ring: 0.42 0.085 175;
+  }
+
+  .dark {
+    --background: 0.155 0.012 250;
+    --foreground: 0.93 0.008 85;
+    --card: 0.19 0.014 250;
+    --card-foreground: 0.93 0.008 85;
+    --popover: 0.22 0.015 250;
+    --popover-foreground: 0.93 0.008 85;
+
+    --primary: 0.68 0.09 175;
+    --primary-foreground: 0.16 0.02 250;
+
+    --secondary: 0.23 0.014 250;
+    --secondary-foreground: 0.88 0.008 85;
+    --muted: 0.23 0.014 250;
+    --muted-foreground: 0.62 0.02 250;
+
+    --accent: 0.26 0.02 250;
+    --accent-foreground: 0.9 0.008 85;
+
+    --destructive: 0.62 0.19 22;
+    --destructive-foreground: 0.985 0.005 85;
+
+    --border: 0.27 0.015 250;
+    --input: 0.27 0.015 250;
+    --ring: 0.68 0.09 175;
+
+    --chart-1: 0.68 0.09 175;
+    --chart-2: 0.75 0.08 180;
+    --chart-3: 0.49 0.24 264;
+    --chart-4: 0.7 0.17 162;
+    --chart-5: 0.65 0.25 16;
+
+    --sidebar: 0.19 0.014 250;
+    --sidebar-foreground: 0.93 0.008 85;
+    --sidebar-primary: 0.68 0.09 175;
+    --sidebar-primary-foreground: 0.16 0.02 250;
+    --sidebar-accent: 0.23 0.014 250;
+    --sidebar-accent-foreground: 0.88 0.008 85;
+    --sidebar-border: 0.27 0.015 250;
+    --sidebar-ring: 0.68 0.09 175;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gradient-primary {
+    background-image: linear-gradient(
+      135deg,
+      oklch(var(--primary) / 1),
+      oklch(0.5 0.1 190 / 1)
+    );
+  }
+
+  .gradient-subtle {
+    background-image: linear-gradient(
+      180deg,
+      oklch(var(--card) / 1),
+      oklch(var(--muted) / 0.6)
+    );
+  }
+
+  .frosted {
+    background: oklch(var(--card) / 0.72);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  }
+
+  .bubble-tail {
+    position: relative;
+  }
+  .bubble-tail::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+  }
+  .bubble-tail-sent::after {
+    right: -7px;
+    border-left: 9px solid oklch(var(--primary) / 1);
+    border-bottom: 9px solid transparent;
+  }
+  .bubble-tail-received::after {
+    left: -7px;
+    border-right: 9px solid oklch(var(--card) / 1);
+    border-bottom: 9px solid transparent;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "overview": "A private two-person messaging app (installable PWA) with two-user authentication, a PIN/biometric privacy lock with auto-lock, real-time one-to-one chat with delivery/read status, media sharing, and WebRTC voice calling.",
+  "features": [
+    "Two-user secure authentication with PIN/biometric lock and auto-lock",
+    "Real-time one-to-one messaging with read/delivery status, typing, and presence",
+    "Reply, copy, delete, reactions, emoji, search, drafts, and unread counter",
+    "Image and file sharing with previews and access control",
+    "WebRTC voice calling with call history"
+  ],
+  "category": "messaging",
+  "tags": [
+    "messaging",
+    "privacy",
+    "communication",
+    "pwa"
+  ],
+  "last_updated": "2026-09-12T11:15:30.708Z"
+}

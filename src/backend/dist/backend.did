@@ -1,0 +1,152 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type TypingStatus = 
+ record {
+   isTyping: bool;
+   updatedAt: Timestamp;
+   userId: UserId;
+ };
+type Timestamp = int;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Reaction = 
+ record {
+   author: UserId;
+   emoji: text;
+ };
+type Presence = 
+ record {
+   online: bool;
+   updatedAt: Timestamp;
+   userId: UserId;
+ };
+type MessageStatus = 
+ variant {
+   delivered;
+   read;
+   sent;
+ };
+type MessageId = nat;
+type Message = 
+ record {
+   attachment: opt Attachment;
+   id: MessageId;
+   reactions: vec Reaction;
+   replyTo: opt MessageId;
+   sender: UserId;
+   status: MessageStatus;
+   "text": text;
+   timestamp: Timestamp;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type CallStatus = 
+ variant {
+   declined;
+   ended;
+   missed;
+   ongoing;
+   ringing;
+ };
+type CallId = nat;
+type Call = 
+ record {
+   callee: UserId;
+   caller: UserId;
+   endedAt: opt Timestamp;
+   id: CallId;
+   startedAt: Timestamp;
+   status: CallStatus;
+ };
+type Attachment = 
+ record {
+   id: nat;
+   kind: text;
+   name: text;
+   size: nat;
+   url: text;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  acceptCall: (id: CallId) -> (bool);
+  addIceCandidate: (callId: CallId, candidate: text) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteMessage: (id: MessageId) -> (bool);
+  endCall: (id: CallId) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  getAnswer: (callId: CallId) -> (opt text) query;
+  getApiDoc: () -> (text) query;
+  getAuthorizedUsers: () -> (vec UserId) query;
+  getCall: (id: CallId) -> (opt Call) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getIceCandidates: (callId: CallId) -> (vec text) query;
+  getMessage: (id: MessageId) -> (opt Message) query;
+  getOffer: (callId: CallId) -> (opt text) query;
+  getPartner: () -> (opt UserId) query;
+  getPresence: (userId: UserId) -> (opt Presence) query;
+  getTyping: (userId: UserId) -> (opt TypingStatus) query;
+  isCallerAdmin: () -> (bool) query;
+  listCalls: () -> (vec Call) query;
+  listMessages: () -> (vec Message);
+  markRead: () -> ();
+  reactToMessage: (id: MessageId, emoji: text) -> (bool);
+  schema: () -> (text) query;
+  searchMessages: (term: text) -> (vec Message) query;
+  sendMessage: ("text": text, replyTo: opt MessageId, attachment:
+   opt Attachment) -> (MessageId);
+  setAnswer: (callId: CallId, sdp: text) -> ();
+  setAuthorizedUsers: (users: vec UserId) -> ();
+  setOffer: (callId: CallId, sdp: text) -> ();
+  setPresence: (online: bool) -> ();
+  setTyping: (isTyping: bool) -> ();
+  startCall: (callee: UserId) -> (CallId);
+}
